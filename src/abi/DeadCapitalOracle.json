@@ -1,7 +1,33 @@
 [
   {
     "type": "constructor",
-    "inputs": [],
+    "inputs": [
+      {
+        "name": "_linkToken",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "_oracle",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "_jobId",
+        "type": "bytes32",
+        "internalType": "bytes32"
+      },
+      {
+        "name": "_fee",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "_assetRegistry",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
     "stateMutability": "nonpayable"
   },
   {
@@ -19,7 +45,7 @@
   },
   {
     "type": "function",
-    "name": "UPGRADER_ROLE",
+    "name": "ORACLE_ADMIN_ROLE",
     "inputs": [],
     "outputs": [
       {
@@ -32,75 +58,45 @@
   },
   {
     "type": "function",
-    "name": "burn",
-    "inputs": [
-      {
-        "name": "amount",
-        "type": "uint256",
-        "internalType": "uint256"
-      }
-    ],
+    "name": "acceptOwnership",
+    "inputs": [],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "assetRegistry",
+    "inputs": [],
     "outputs": [
       {
         "name": "",
         "type": "address",
-        "internalType": "address"
-      },
-      {
-        "name": "",
-        "type": "string",
-        "internalType": "string"
+        "internalType": "contract IDeadCapitalAssetRegistry"
       }
     ],
-    "stateMutability": "pure"
+    "stateMutability": "view"
   },
   {
     "type": "function",
-    "name": "burnTier",
+    "name": "fulfill",
     "inputs": [
       {
-        "name": "amount",
-        "type": "uint256",
-        "internalType": "uint256"
+        "name": "_requestId",
+        "type": "bytes32",
+        "internalType": "bytes32"
       },
       {
-        "name": "tier",
-        "type": "string",
-        "internalType": "string"
+        "name": "_data",
+        "type": "bytes",
+        "internalType": "bytes"
       }
     ],
     "outputs": [],
-    "stateMutability": "pure"
+    "stateMutability": "nonpayable"
   },
   {
     "type": "function",
-    "name": "dcRegistry",
-    "inputs": [],
-    "outputs": [
-      {
-        "name": "",
-        "type": "address",
-        "internalType": "contract DeadCapitalAssetRegistry"
-      }
-    ],
-    "stateMutability": "view"
-  },
-  {
-    "type": "function",
-    "name": "dcUSD",
-    "inputs": [],
-    "outputs": [
-      {
-        "name": "",
-        "type": "address",
-        "internalType": "contract DeadCapitalStablecoin"
-      }
-    ],
-    "stateMutability": "view"
-  },
-  {
-    "type": "function",
-    "name": "getAssetTier",
+    "name": "getAssetValue",
     "inputs": [
       {
         "name": "assetId",
@@ -110,37 +106,14 @@
     ],
     "outputs": [
       {
-        "name": "tier",
-        "type": "string",
-        "internalType": "string"
-      }
-    ],
-    "stateMutability": "view"
-  },
-  {
-    "type": "function",
-    "name": "getContracts",
-    "inputs": [],
-    "outputs": [
-      {
-        "name": "_dcUSD",
-        "type": "address",
-        "internalType": "address"
+        "name": "valueUSD",
+        "type": "uint256",
+        "internalType": "uint256"
       },
       {
-        "name": "_vaUSD",
-        "type": "address",
-        "internalType": "address"
-      },
-      {
-        "name": "_dcRegistry",
-        "type": "address",
-        "internalType": "address"
-      },
-      {
-        "name": "_vaRegistry",
-        "type": "address",
-        "internalType": "address"
+        "name": "confidenceScore",
+        "type": "uint256",
+        "internalType": "uint256"
       }
     ],
     "stateMutability": "view"
@@ -166,32 +139,16 @@
   },
   {
     "type": "function",
-    "name": "getTierBreakdown",
-    "inputs": [
-      {
-        "name": "user",
-        "type": "address",
-        "internalType": "address"
-      }
-    ],
+    "name": "getZMWtoUSDRate",
+    "inputs": [],
     "outputs": [
       {
-        "name": "names",
-        "type": "string[]",
-        "internalType": "string[]"
-      },
-      {
-        "name": "balances",
-        "type": "uint256[]",
-        "internalType": "uint256[]"
-      },
-      {
-        "name": "percentages",
-        "type": "uint256[]",
-        "internalType": "uint256[]"
+        "name": "rate",
+        "type": "uint256",
+        "internalType": "uint256"
       }
     ],
-    "stateMutability": "view"
+    "stateMutability": "pure"
   },
   {
     "type": "function",
@@ -237,40 +194,7 @@
   },
   {
     "type": "function",
-    "name": "initialize",
-    "inputs": [
-      {
-        "name": "_dcUSD",
-        "type": "address",
-        "internalType": "address"
-      },
-      {
-        "name": "_vaUSD",
-        "type": "address",
-        "internalType": "address"
-      },
-      {
-        "name": "_dcRegistry",
-        "type": "address",
-        "internalType": "address"
-      },
-      {
-        "name": "_vaRegistry",
-        "type": "address",
-        "internalType": "address"
-      },
-      {
-        "name": "admin",
-        "type": "address",
-        "internalType": "address"
-      }
-    ],
-    "outputs": [],
-    "stateMutability": "nonpayable"
-  },
-  {
-    "type": "function",
-    "name": "mint",
+    "name": "isValuationStale",
     "inputs": [
       {
         "name": "assetId",
@@ -281,21 +205,110 @@
     "outputs": [
       {
         "name": "",
-        "type": "address",
-        "internalType": "address"
+        "type": "bool",
+        "internalType": "bool"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "manualUpdate",
+    "inputs": [
+      {
+        "name": "assetId",
+        "type": "bytes32",
+        "internalType": "bytes32"
       },
       {
-        "name": "",
+        "name": "valueUSD",
         "type": "uint256",
         "internalType": "uint256"
       },
       {
-        "name": "",
-        "type": "string",
-        "internalType": "string"
+        "name": "confidenceScore",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "validatorCount",
+        "type": "uint256",
+        "internalType": "uint256"
       }
     ],
-    "stateMutability": "pure"
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "maxPriceDeviationPercent",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "maxVarianceForHighConfidence",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "minValidators",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "owner",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "pendingRequests",
+    "inputs": [
+      {
+        "name": "",
+        "type": "bytes32",
+        "internalType": "bytes32"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "bytes32",
+        "internalType": "bytes32"
+      }
+    ],
+    "stateMutability": "view"
   },
   {
     "type": "function",
@@ -317,6 +330,19 @@
   },
   {
     "type": "function",
+    "name": "requestValuationUpdate",
+    "inputs": [
+      {
+        "name": "assetId",
+        "type": "bytes32",
+        "internalType": "bytes32"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
     "name": "revokeRole",
     "inputs": [
       {
@@ -328,6 +354,19 @@
         "name": "account",
         "type": "address",
         "internalType": "address"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "setMaxPriceDeviation",
+    "inputs": [
+      {
+        "name": "_percent",
+        "type": "uint256",
+        "internalType": "uint256"
       }
     ],
     "outputs": [],
@@ -354,64 +393,63 @@
   },
   {
     "type": "function",
-    "name": "totalBalance",
+    "name": "transferOwnership",
     "inputs": [
       {
-        "name": "user",
+        "name": "to",
         "type": "address",
         "internalType": "address"
       }
     ],
-    "outputs": [
-      {
-        "name": "total",
-        "type": "uint256",
-        "internalType": "uint256"
-      },
-      {
-        "name": "standard",
-        "type": "uint256",
-        "internalType": "uint256"
-      },
-      {
-        "name": "premium",
-        "type": "uint256",
-        "internalType": "uint256"
-      }
-    ],
-    "stateMutability": "view"
+    "outputs": [],
+    "stateMutability": "nonpayable"
   },
   {
     "type": "function",
-    "name": "upgradeStandardToPremium",
+    "name": "updateChainlinkParams",
     "inputs": [
       {
-        "name": "assetId",
+        "name": "_jobId",
         "type": "bytes32",
         "internalType": "bytes32"
       },
       {
-        "name": "titleDeedHash",
-        "type": "bytes32",
-        "internalType": "bytes32"
-      },
-      {
-        "name": "valuationReportHash",
-        "type": "bytes32",
-        "internalType": "bytes32"
+        "name": "_fee",
+        "type": "uint256",
+        "internalType": "uint256"
       }
     ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "updateOracleParameters",
+    "inputs": [
+      {
+        "name": "_minValidators",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "_maxVariance",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "_validityPeriod",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "valuationValidityPeriod",
+    "inputs": [],
     "outputs": [
-      {
-        "name": "",
-        "type": "uint256",
-        "internalType": "uint256"
-      },
-      {
-        "name": "",
-        "type": "uint256",
-        "internalType": "uint256"
-      },
       {
         "name": "",
         "type": "uint256",
@@ -422,39 +460,148 @@
   },
   {
     "type": "function",
-    "name": "vaRegistry",
-    "inputs": [],
-    "outputs": [
+    "name": "valuations",
+    "inputs": [
       {
         "name": "",
-        "type": "address",
-        "internalType": "contract VerifiedAssetRegistry"
+        "type": "bytes32",
+        "internalType": "bytes32"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "valueUSD",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "confidenceScore",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "lastUpdateTime",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "validatorCount",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "variance",
+        "type": "uint256",
+        "internalType": "uint256"
       }
     ],
     "stateMutability": "view"
   },
   {
     "type": "function",
-    "name": "vaUSD",
+    "name": "withdrawLink",
     "inputs": [],
-    "outputs": [
-      {
-        "name": "",
-        "type": "address",
-        "internalType": "contract VerifiedAssetStablecoin"
-      }
-    ],
-    "stateMutability": "view"
+    "outputs": [],
+    "stateMutability": "nonpayable"
   },
   {
     "type": "event",
-    "name": "Initialized",
+    "name": "ChainlinkCancelled",
     "inputs": [
       {
-        "name": "version",
-        "type": "uint64",
+        "name": "id",
+        "type": "bytes32",
+        "indexed": true,
+        "internalType": "bytes32"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "ChainlinkFulfilled",
+    "inputs": [
+      {
+        "name": "id",
+        "type": "bytes32",
+        "indexed": true,
+        "internalType": "bytes32"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "ChainlinkRequested",
+    "inputs": [
+      {
+        "name": "id",
+        "type": "bytes32",
+        "indexed": true,
+        "internalType": "bytes32"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "OracleParametersUpdated",
+    "inputs": [
+      {
+        "name": "minValidators",
+        "type": "uint256",
         "indexed": false,
-        "internalType": "uint64"
+        "internalType": "uint256"
+      },
+      {
+        "name": "maxVariance",
+        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256"
+      },
+      {
+        "name": "validityPeriod",
+        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "OwnershipTransferRequested",
+    "inputs": [
+      {
+        "name": "from",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      },
+      {
+        "name": "to",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "OwnershipTransferred",
+    "inputs": [
+      {
+        "name": "from",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      },
+      {
+        "name": "to",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
       }
     ],
     "anonymous": false
@@ -536,45 +683,8 @@
   },
   {
     "type": "event",
-    "name": "StablecoinBurned",
+    "name": "ValuationRequested",
     "inputs": [
-      {
-        "name": "user",
-        "type": "address",
-        "indexed": true,
-        "internalType": "address"
-      },
-      {
-        "name": "token",
-        "type": "address",
-        "indexed": true,
-        "internalType": "address"
-      },
-      {
-        "name": "amount",
-        "type": "uint256",
-        "indexed": false,
-        "internalType": "uint256"
-      },
-      {
-        "name": "tier",
-        "type": "string",
-        "indexed": false,
-        "internalType": "string"
-      }
-    ],
-    "anonymous": false
-  },
-  {
-    "type": "event",
-    "name": "StablecoinMinted",
-    "inputs": [
-      {
-        "name": "user",
-        "type": "address",
-        "indexed": true,
-        "internalType": "address"
-      },
       {
         "name": "assetId",
         "type": "bytes32",
@@ -582,36 +692,18 @@
         "internalType": "bytes32"
       },
       {
-        "name": "token",
-        "type": "address",
+        "name": "requestId",
+        "type": "bytes32",
         "indexed": true,
-        "internalType": "address"
-      },
-      {
-        "name": "amount",
-        "type": "uint256",
-        "indexed": false,
-        "internalType": "uint256"
-      },
-      {
-        "name": "tier",
-        "type": "string",
-        "indexed": false,
-        "internalType": "string"
+        "internalType": "bytes32"
       }
     ],
     "anonymous": false
   },
   {
     "type": "event",
-    "name": "TierUpgraded",
+    "name": "ValuationUpdated",
     "inputs": [
-      {
-        "name": "user",
-        "type": "address",
-        "indexed": true,
-        "internalType": "address"
-      },
       {
         "name": "assetId",
         "type": "bytes32",
@@ -619,19 +711,19 @@
         "internalType": "bytes32"
       },
       {
-        "name": "dcUSDAmount",
+        "name": "valueUSD",
         "type": "uint256",
         "indexed": false,
         "internalType": "uint256"
       },
       {
-        "name": "vaUSDAmount",
+        "name": "confidenceScore",
         "type": "uint256",
         "indexed": false,
         "internalType": "uint256"
       },
       {
-        "name": "excessCollateralReleased",
+        "name": "validatorCount",
         "type": "uint256",
         "indexed": false,
         "internalType": "uint256"
@@ -662,76 +754,12 @@
   },
   {
     "type": "error",
-    "name": "AssetNotFound",
-    "inputs": [
-      {
-        "name": "assetId",
-        "type": "bytes32",
-        "internalType": "bytes32"
-      }
-    ]
-  },
-  {
-    "type": "error",
-    "name": "InsufficientBalance",
-    "inputs": [
-      {
-        "name": "token",
-        "type": "address",
-        "internalType": "address"
-      },
-      {
-        "name": "required",
-        "type": "uint256",
-        "internalType": "uint256"
-      },
-      {
-        "name": "available",
-        "type": "uint256",
-        "internalType": "uint256"
-      }
-    ]
-  },
-  {
-    "type": "error",
-    "name": "InvalidInitialization",
+    "name": "DeadCapitalOracle__InvalidDeviation",
     "inputs": []
   },
   {
     "type": "error",
-    "name": "InvalidRegistry",
-    "inputs": [
-      {
-        "name": "registry",
-        "type": "address",
-        "internalType": "address"
-      }
-    ]
-  },
-  {
-    "type": "error",
-    "name": "NotInitializing",
+    "name": "DeadCapitalOracle__PriceDeviationExceeded",
     "inputs": []
-  },
-  {
-    "type": "error",
-    "name": "ReentrancyGuardReentrantCall",
-    "inputs": []
-  },
-  {
-    "type": "error",
-    "name": "UpgradeNotEligible",
-    "inputs": [
-      {
-        "name": "assetId",
-        "type": "bytes32",
-        "internalType": "bytes32"
-      },
-      {
-        "name": "reason",
-        "type": "string",
-        "internalType": "string"
-      }
-    ]
   }
 ]

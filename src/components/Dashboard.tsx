@@ -1,12 +1,20 @@
 'use client';
 
 import { useAccount } from 'wagmi';
+import { useRouter as useNextRouter } from 'next/navigation';
 import { useRouter } from '@/hooks/useRouter';
 import { formatEther } from 'viem';
 
-export function Dashboard() {
+interface DashboardProps {
+  onRepayClick: () => void;
+  onWithdrawalClick: () => void;
+  onUpgradeClick: () => void;
+}
+
+export function Dashboard({ onRepayClick, onWithdrawalClick, onUpgradeClick }: DashboardProps) {
   const { address, isConnected } = useAccount();
-  const { useTotalBalance, useTierBreakdown } = useRouter();
+  const router = useNextRouter(); // Next.js navigation
+  const { useTotalBalance, useTierBreakdown } = useRouter(); // Contract hooks
 
   const { data: balanceData } = useTotalBalance(address as `0x${string}`);
   const { data: tierData } = useTierBreakdown(address as `0x${string}`);
@@ -50,14 +58,33 @@ export function Dashboard() {
         </div>
       </div>
 
-      <div className="mt-6 flex gap-4">
-        <button className="bg-emerald-600 text-white px-6 py-3 rounded-lg hover:bg-emerald-700 font-semibold shadow-md transition-all">
-          Borrow More
+      {/* Action Buttons */}
+      <div className="grid grid-cols-4 gap-4 mt-8">
+        <button 
+          onClick={() => router.push('/assets')}
+          className="px-6 py-4 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-lg hover:from-emerald-700 hover:to-teal-700 font-semibold shadow-lg transition-all"
+        >
+          Mint
         </button>
-        <button className="bg-teal-600 text-white px-6 py-3 rounded-lg hover:bg-teal-700 font-semibold shadow-md transition-all">
-          Repay Loan
+        
+        <button 
+          onClick={onRepayClick}
+          className="px-6 py-4 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-lg hover:from-emerald-700 hover:to-teal-700 font-semibold shadow-lg transition-all"
+        >
+          Make Payment
         </button>
-        <button className="bg-gradient-to-r from-yellow-500 to-amber-500 text-white px-6 py-3 rounded-lg hover:from-yellow-600 hover:to-amber-600 font-semibold shadow-md transition-all">
+        
+        <button 
+          onClick={onWithdrawalClick}
+          className="px-6 py-4 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-lg hover:from-emerald-700 hover:to-teal-700 font-semibold shadow-lg transition-all"
+        >
+          Cash Out
+        </button>
+        
+        <button 
+          onClick={onUpgradeClick}
+          className="px-6 py-4 bg-gradient-to-r from-yellow-500 to-amber-500 text-white rounded-lg hover:from-yellow-600 hover:to-amber-600 font-semibold shadow-lg transition-all"
+        >
           ⭐ Upgrade to Premium
         </button>
       </div>

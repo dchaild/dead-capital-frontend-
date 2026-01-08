@@ -16,7 +16,7 @@ export function useStablecoin() {
     // Mint from Standard tier (dcUSD)
     depositAndMintStandard: async (assetId: `0x${string}`, amount: string) => {
       return writeContract({
-        address: CONTRACTS.dcUSD,
+        address: CONTRACTS.dcUSD.address,
         abi: ABIS.dcUSD,
         functionName: 'depositAndMint',
         args: [assetId, parseEther(amount)],
@@ -26,7 +26,7 @@ export function useStablecoin() {
     // Mint from Premium tier (vaUSD)
     depositAndMintPremium: async (assetId: `0x${string}`, amount: string) => {
       return writeContract({
-        address: CONTRACTS.vaUSD,
+        address: CONTRACTS.vaUSD.address,
         abi: ABIS.vaUSD,
         functionName: 'depositAndMint',
         args: [assetId, parseEther(amount)],
@@ -39,7 +39,7 @@ export function useStablecoin() {
       amount: string,
       tier: 'Standard' | 'Premium'
     ) => {
-      const contractAddress = tier === 'Standard' ? CONTRACTS.dcUSD : CONTRACTS.vaUSD;
+      const contractAddress = tier === 'Standard' ? CONTRACTS.dcUSD.address : CONTRACTS.vaUSD.address;
       const abi = tier === 'Standard' ? ABIS.dcUSD : ABIS.vaUSD;
 
       return writeContract({
@@ -52,7 +52,7 @@ export function useStablecoin() {
 
     // Close position completely
     closePosition: async (positionId: bigint, tier: 'Standard' | 'Premium') => {
-      const contractAddress = tier === 'Standard' ? CONTRACTS.dcUSD : CONTRACTS.vaUSD;
+      const contractAddress = tier === 'Standard' ? CONTRACTS.dcUSD.address : CONTRACTS.vaUSD.address;
       const abi = tier === 'Standard' ? ABIS.dcUSD : ABIS.vaUSD;
 
       return writeContract({
@@ -60,6 +60,23 @@ export function useStablecoin() {
         abi: abi,
         functionName: 'closePosition',
         args: [positionId],
+      });
+    },
+
+      // Request ZMW mobile money withdrawal
+    requestZMWWithdrawal: async (
+      amount: string,
+      mobileNumber: string,
+      tier: 'Standard' | 'Premium'
+    ) => {
+      const contractAddress = tier === 'Standard' ? CONTRACTS.dcUSD.address : CONTRACTS.vaUSD.address;
+      const abi = tier === 'Standard' ? ABIS.dcUSD : ABIS.vaUSD;
+
+      return writeContract({
+        address: contractAddress,
+        abi: abi,
+        functionName: 'requestZMWWithdrawal',
+        args: [parseEther(amount), mobileNumber],
       });
     },
 
